@@ -1,0 +1,14 @@
+# Example policy for aratame. Copy to aratame.yml and edit.
+# Do not put real hostnames, project codenames, or personal addresses here.
+
+deny_literals:
+  - example-internal-hostname
+deny_patterns: []
+author_email_allow:
+  - '@users\.noreply\.github\.com$'
+exclude_paths:
+  - vendor/**
+  - '**/*.min.js'
+gitleaks:
+  command: gitleaks
+  extra_args: []
