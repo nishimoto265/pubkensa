@@ -30,7 +30,7 @@ func Run(repoDir, command string, extra []string) (Report, error) {
 	if _, err := exec.LookPath(command); err != nil {
 		return Report{}, fmt.Errorf("gitleaks not found in PATH (%s): %w", command, err)
 	}
-	tmp, err := os.MkdirTemp("", "aratame-gitleaks-")
+	tmp, err := os.MkdirTemp("", "pubkensa-gitleaks-")
 	if err != nil {
 		return Report{}, err
 	}

@@ -5,8 +5,8 @@ import (
 	"os/exec"
 	"strings"
 
-	"github.com/nishimoto265/aratame/internal/config"
-	"github.com/nishimoto265/aratame/internal/gitleaks"
+	"github.com/nishimoto265/pubkensa/internal/config"
+	"github.com/nishimoto265/pubkensa/internal/gitleaks"
 )
 
 type Kind string
@@ -110,10 +110,10 @@ func Run(opts Options) (*Result, error) {
 
 func FormatHuman(r *Result) string {
 	if r.OK {
-		return fmt.Sprintf("aratame: no findings (%d commits, %d files)\n", r.Scanned.Commits, r.Scanned.Files)
+		return fmt.Sprintf("pubkensa: no findings (%d commits, %d files)\n", r.Scanned.Commits, r.Scanned.Files)
 	}
 	var b strings.Builder
-	fmt.Fprintf(&b, "aratame: %d finding(s)\n", len(r.Findings))
+	fmt.Fprintf(&b, "pubkensa: %d finding(s)\n", len(r.Findings))
 	for _, f := range r.Findings {
 		loc := f.Path
 		if f.Line > 0 {

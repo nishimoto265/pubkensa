@@ -34,11 +34,11 @@ def main():
     d.rectangle((0, 0, 16, H), fill=TEAL)
 
     title = inter(92, weight=650, opsz=32)
-    d.text((88, 150), "aratame", font=title, fill=INK)
+    d.text((88, 150), "pubkensa", font=title, fill=INK)
 
     # Small Japanese name, not a heavy seal
     jp = cjk(CJK_BOLD, 36)
-    d.text((88, 262), "改め", font=jp, fill=TEAL)
+    d.text((88, 262), "パブケンサ", font=jp, fill=TEAL)
 
     tag_en = inter(28, weight=450, opsz=18)
     tag_jp = cjk(CJK_REG, 26)
@@ -59,7 +59,7 @@ def main():
         x += tw + pad_x * 2 + 20
 
     foot = inter(18, weight=500, opsz=14)
-    d.text((88, 560), "MIT  ·  Go CLI  ·  name is provisional", font=foot, fill=MUTED)
+    d.text((88, 560), "MIT  ·  Go CLI", font=foot, fill=MUTED)
 
     img.save(OUT, "PNG")
     print("wrote", OUT, img.size)

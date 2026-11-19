@@ -1,6 +1,6 @@
-# Copy into a repository as .github/workflows/aratame.yml
-# After aratame is published, replace the build step with a released binary.
-name: aratame
+# Copy into a repository as .github/workflows/pubkensa.yml
+# After pubkensa is published, replace the build step with a released binary.
+name: pubkensa
 
 on:
   push:
@@ -10,7 +10,7 @@ permissions:
   contents: read
 
 jobs:
-  aratame:
+  pubkensa:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -38,8 +38,8 @@ jobs:
 
       # After a public release, prefer a pinned binary. Until then, build from
       # a checkout of this source (replace the path) or drop a prebuilt binary in PATH.
-      - name: Install aratame
-        run: go install github.com/nishimoto265/aratame/cmd/aratame@main
+      - name: Install pubkensa
+        run: go install github.com/nishimoto265/pubkensa/cmd/pubkensa@main
 
-      - name: Run aratame
-        run: aratame scan
+      - name: Run pubkensa
+        run: pubkensa scan

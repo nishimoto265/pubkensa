@@ -1,4 +1,4 @@
-module github.com/nishimoto265/aratame
+module github.com/nishimoto265/pubkensa
 
 go 1.23
 

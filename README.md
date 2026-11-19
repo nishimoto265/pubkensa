@@ -1,4 +1,4 @@
-# aratame（改め）
+# pubkensa（パブケンサ）
 
 A small pre-publish gate for Git repositories. One command runs three checks:
 
@@ -7,8 +7,6 @@ A small pre-publish gate for Git repositories. One command runs three checks:
 3. **Author / committer policy** — emails must match an allow list (default: GitHub `users.noreply.github.com` addresses).
 
 It does not rewrite history, fix files, or change repository settings.
-
-The name is provisional. A trademark check should be done before treating it as final.
 
 This repository is not public yet. The install commands below will work only after a GitHub repository exists.
 
@@ -19,27 +17,27 @@ This repository is not public yet. The install commands below will work only aft
 - Go 1.23 or later to build
 
 ```bash
-go build -o bin/aratame ./cmd/aratame
+go build -o bin/pubkensa ./cmd/pubkensa
 ```
 
 After a public release, a binary from the Releases page, or:
 
 ```bash
-go install github.com/nishimoto265/aratame/cmd/aratame@latest
+go install github.com/nishimoto265/pubkensa/cmd/pubkensa@latest
 ```
 
 ## Usage
 
 ```bash
-aratame scan [path]
-  --config path     default: <repo>/aratame.yml if that file exists
+pubkensa scan [path]
+  --config path     default: <repo>/pubkensa.yml if that file exists
   --json            JSON on stdout, human text on stderr
   --since <rev>     limit author and history checks to commits after this revision
 ```
 
 Exit codes: `0` no findings, `1` findings, `2` tool error (bad config, not a git repo, gitleaks missing).
 
-Copy `aratame.yml.example` to `aratame.yml` and add your own deny list. Do not commit real internal hostnames or personal addresses in the example file. The example deny word appears in the example file itself; using that file as `--config` against this repository will report it.
+Copy `pubkensa.yml.example` to `pubkensa.yml` and add your own deny list. Do not commit real internal hostnames or personal addresses in the example file. The example deny word appears in the example file itself; using that file as `--config` against this repository will report it.
 
 A copy-paste GitHub Actions workflow is in `examples/github-workflow.yml`. Until a release exists, build from source (or drop a prebuilt binary on `PATH`) instead of `go install @latest`.
 
@@ -61,8 +59,6 @@ Git リポジトリ向けの、小さな公開前ゲートです。次の3つを
 
 履歴の書き換え、ファイルの修正、リポジトリ設定の変更はしません。
 
-名前は仮称です。正式に使う前に商標の確認が必要です。
-
 このリポジトリはまだ公開していません。下記のインストールは、公開後に使えるようになります。
 
 ### 必要条件
@@ -72,27 +68,27 @@ Git リポジトリ向けの、小さな公開前ゲートです。次の3つを
 - ビルドする場合は Go 1.23 以降
 
 ```bash
-go build -o bin/aratame ./cmd/aratame
+go build -o bin/pubkensa ./cmd/pubkensa
 ```
 
 公開後は Releases のバイナリか、次でも入れられます。
 
 ```bash
-go install github.com/nishimoto265/aratame/cmd/aratame@latest
+go install github.com/nishimoto265/pubkensa/cmd/pubkensa@latest
 ```
 
 ### 使い方
 
 ```bash
-aratame scan [path]
-  --config path     既定は、リポジトリに aratame.yml があればそれ
+pubkensa scan [path]
+  --config path     既定は、リポジトリに pubkensa.yml があればそれ
   --json            JSON を標準出力、人間向けの文は標準エラー
   --since <rev>     このリビジョンより後のコミットだけを author と履歴の対象にする
 ```
 
 終了コードは `0` が指摘なし、`1` が指摘あり、`2` が設定誤り・Git リポジトリではない・gitleaks がない、などです。
 
-`aratame.yml.example` を `aratame.yml` にコピーし、自分の拒否リストを書いてください。実在のホスト名や個人のメールを example に書かないでください。example の拒否語は example ファイル自身に出てくるので、このリポジトリをその設定でスキャンするとヒットします。
+`pubkensa.yml.example` を `pubkensa.yml` にコピーし、自分の拒否リストを書いてください。実在のホスト名や個人のメールを example に書かないでください。example の拒否語は example ファイル自身に出てくるので、このリポジトリをその設定でスキャンするとヒットします。
 
 GitHub Actions の控えは `examples/github-workflow.yml` にあります。リリースが出るまでは、ソースからビルドするか、バイナリを PATH に置いてください。
 

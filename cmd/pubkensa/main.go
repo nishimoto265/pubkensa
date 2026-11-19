@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/nishimoto265/aratame/internal/scan"
+	"github.com/nishimoto265/pubkensa/internal/scan"
 )
 
 func main() {
@@ -14,14 +14,14 @@ func main() {
 }
 
 func run(args []string) int {
-	fs := flag.NewFlagSet("aratame", flag.ContinueOnError)
+	fs := flag.NewFlagSet("pubkensa", flag.ContinueOnError)
 	fs.SetOutput(os.Stderr)
-	config := fs.String("config", "", "path to aratame.yml (default: <repo>/aratame.yml if present)")
+	config := fs.String("config", "", "path to pubkensa.yml (default: <repo>/pubkensa.yml if present)")
 	jsonOut := fs.Bool("json", false, "write JSON to stdout")
 	since := fs.String("since", "", "limit author and history checks to commits after this revision")
 	skipGL := fs.Bool("skip-gitleaks", false, "skip the gitleaks invocation (for tests)")
 	fs.Usage = func() {
-		fmt.Fprintf(os.Stderr, "usage: aratame scan [path] [flags]\n")
+		fmt.Fprintf(os.Stderr, "usage: pubkensa scan [path] [flags]\n")
 		fs.PrintDefaults()
 	}
 	if len(args) == 0 {
@@ -47,7 +47,7 @@ func run(args []string) int {
 		SkipGitleaks: *skipGL,
 	})
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "aratame: %v\n", err)
+		fmt.Fprintf(os.Stderr, "pubkensa: %v\n", err)
 		return 2
 	}
 	human := scan.FormatHuman(res)
@@ -55,7 +55,7 @@ func run(args []string) int {
 		enc := json.NewEncoder(os.Stdout)
 		enc.SetIndent("", "  ")
 		if err := enc.Encode(res); err != nil {
-			fmt.Fprintf(os.Stderr, "aratame: %v\n", err)
+			fmt.Fprintf(os.Stderr, "pubkensa: %v\n", err)
 			return 2
 		}
 		fmt.Fprint(os.Stderr, human)

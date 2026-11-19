@@ -6,7 +6,7 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/nishimoto265/aratame/internal/config"
+	"github.com/nishimoto265/pubkensa/internal/config"
 )
 
 func TestCleanRepo(t *testing.T) {
@@ -98,7 +98,7 @@ func cfgNormalize(c *config.Config) error {
 func loadInto(c *config.Config) error {
 	// Re-parse through yaml is heavy; just rely on Default already having allow list.
 	// Deny patterns need ResolvedPatterns; literals do not.
-	tmp, err := os.CreateTemp("", "aratame-cfg-*.yml")
+	tmp, err := os.CreateTemp("", "pubkensa-cfg-*.yml")
 	if err != nil {
 		return err
 	}

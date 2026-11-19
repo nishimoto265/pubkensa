@@ -11,7 +11,7 @@ import (
 	"strings"
 	"unicode/utf8"
 
-	"github.com/nishimoto265/aratame/internal/config"
+	"github.com/nishimoto265/pubkensa/internal/config"
 )
 
 type matcher struct {

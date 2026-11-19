@@ -1,4 +1,4 @@
-# Example policy for aratame. Copy to aratame.yml and edit.
+# Example policy for pubkensa. Copy to pubkensa.yml and edit.
 # Do not put real hostnames, project codenames, or personal addresses here.
 
 deny_literals:

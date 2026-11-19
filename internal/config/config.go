@@ -60,7 +60,7 @@ func Find(repoDir, explicit string) (string, error) {
 	if explicit != "" {
 		return explicit, nil
 	}
-	for _, name := range []string{"aratame.yml", "aratame.yaml"} {
+	for _, name := range []string{"pubkensa.yml", "pubkensa.yaml"} {
 		p := filepath.Join(repoDir, name)
 		if _, err := os.Stat(p); err == nil {
 			return p, nil
