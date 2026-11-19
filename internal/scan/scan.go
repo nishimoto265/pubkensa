@@ -70,7 +70,7 @@ func Run(opts Options) (*Result, error) {
 		return nil, err
 	}
 
-	res := &Result{ConfigPath: cfgPath, Gitleaks: true}
+	res := &Result{ConfigPath: cfgPath, Gitleaks: true, Findings: []Finding{}}
 
 	authors, nCommits, err := CheckAuthors(root, opts.Since, cfg.AuthorEmailAllow)
 	if err != nil {
