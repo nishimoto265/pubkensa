@@ -1,0 +1,75 @@
+# Draft only. Do not run `goreleaser release` (or snapshot-to-publish)
+# until the repository is public and a tag is explicitly approved.
+version: 2
+
+project_name: aratame
+
+before:
+  hooks:
+    - go mod tidy
+
+builds:
+  - id: aratame
+    main: ./cmd/aratame
+    binary: aratame
+    env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+      - darwin
+      - windows
+    goarch:
+      - amd64
+      - arm64
+    ldflags:
+      - -s -w
+
+archives:
+  - id: aratame
+    ids:
+      - aratame
+    name_template: "{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
+    formats:
+      - tar.gz
+    format_overrides:
+      - goos: windows
+        formats:
+          - zip
+
+checksum:
+  name_template: checksums.txt
+  algorithm: sha256
+
+changelog:
+  sort: asc
+  filters:
+    exclude:
+      - "^docs:"
+      - "^test:"
+      - "^ci:"
+      - Merge pull request
+      - Merge branch
+
+release:
+  github:
+    owner: nishimoto265
+    name: aratame
+  name_template: "{{ .Tag }}"
+  header: |
+    aratame is a small pre-publish gate for Git repositories. One command
+    runs three checks: secrets (delegated to gitleaks), a deny list you
+    provide, and an author/committer email policy (default: GitHub
+    noreply addresses).
+
+    It does not rewrite history, fix files, or change repository settings.
+    gitleaks must be installed separately and available on PATH.
+  footer: |
+    ---
+
+    The name is provisional; a trademark check should be done before
+    treating it as final.
+
+    Install: see the README — a release binary, or
+    `go install github.com/nishimoto265/aratame/cmd/aratame@latest`
+    after this repository is public. Secret detection is performed by
+    gitleaks, which has its own license.

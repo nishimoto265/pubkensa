@@ -1,0 +1,78 @@
+name: release
+
+# Draft workflow. Do not push a tag or run this workflow until the
+# repository is public and a release is explicitly approved.
+#
+# Releases are built by GoReleaser. Triggers:
+#   - pushing a tag like v0.1.0 (the normal path)
+#   - pushing to / creating a branch named release-<tag> (e.g. release-v0.1.0),
+#     which tags the branch head and releases it
+#   - manual workflow_dispatch with an explicit tag input
+on:
+  push:
+    tags:
+      - "v*"
+    branches:
+      - "release-**"
+  create:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Tag to release (e.g. v0.1.0)"
+        required: true
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    name: GoReleaser
+    if: >-
+      github.event_name == 'push' ||
+      github.event_name == 'workflow_dispatch' ||
+      (github.event_name == 'create' && startsWith(github.ref, 'refs/heads/release-'))
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - name: Determine release tag
+        id: tag
+        shell: bash
+        run: |
+          set -euo pipefail
+          case "${{ github.event_name }}" in
+            workflow_dispatch)
+              TAG="${{ inputs.tag }}"
+              ;;
+            *)
+              if [[ "${GITHUB_REF_NAME}" == release-* ]]; then
+                TAG="${GITHUB_REF_NAME#release-}"
+              else
+                TAG="${GITHUB_REF_NAME}"
+              fi
+              ;;
+          esac
+          echo "tag=${TAG}" >> "${GITHUB_OUTPUT}"
+          if git rev-parse -q --verify "refs/tags/${TAG}" >/dev/null; then
+            echo "tag ${TAG} already exists"
+          else
+            git tag "${TAG}"
+            echo "created local tag ${TAG} at $(git rev-parse --short HEAD)"
+          fi
+
+      - name: Set up Go
+        uses: actions/setup-go@v7
+        with:
+          go-version-file: go.mod
+
+      - name: Run GoReleaser
+        uses: goreleaser/goreleaser-action@v7
+        with:
+          distribution: goreleaser
+          version: "~> v2"
+          args: release --clean
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
